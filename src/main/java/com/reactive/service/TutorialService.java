@@ -1,6 +1,7 @@
 package com.reactive.service;
 
 import com.reactive.entity.Tutorial;
+import com.reactive.exception.DataNotFoundException;
 import com.reactive.repository.TutorialRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class TutorialService {
     }
 
     public Mono<Tutorial> findById(Integer id) {
-        return tutorialRepository.findById(id);
+        return tutorialRepository.findById(id).switchIfEmpty(Mono.error(new DataNotFoundException("Tutorial not found with " + id)));
     }
 
     public Mono<Tutorial> save(Tutorial tutorial) {
@@ -30,7 +31,7 @@ public class TutorialService {
 
     public Mono<Tutorial> update(Integer id, Tutorial tutorial) {
         return tutorialRepository.findById(id)
-                .switchIfEmpty(Mono.error(new RuntimeException("Tutorial not found with " + id)))
+                .switchIfEmpty(Mono.error(new DataNotFoundException("Tutorial not found with " + id)))
                 .flatMap(tutorialSnapshotDb -> {
                     tutorialSnapshotDb.setDescription(tutorial.getDescription());
                     tutorialSnapshotDb.setPublished(tutorial.getPublished());
