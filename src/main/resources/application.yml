@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: Tutorial-Management
+  r2dbc:
+    url: r2dbc:h2:mem:///testDB
+
+logging:
+  level:
+    org:
+      hibernate: ERROR
+      springframework:
+        web: DEBUG
