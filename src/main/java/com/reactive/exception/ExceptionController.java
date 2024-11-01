@@ -12,7 +12,7 @@ public class ExceptionController {
 
     @ExceptionHandler(DataNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<DataNotFoundException> handleDataNotFoundException(DataNotFoundException dataNotFoundException){
-        return new ResponseEntity<>(dataNotFoundException, HttpStatusCode.valueOf(404));
+    public ResponseEntity<String> handleDataNotFoundException(DataNotFoundException dataNotFoundException){
+        return new ResponseEntity<>(dataNotFoundException.getMessage(), HttpStatusCode.valueOf(404));
     }
 }

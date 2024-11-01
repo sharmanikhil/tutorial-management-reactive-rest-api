@@ -47,4 +47,9 @@ public class TutorialController {
     public Mono<Void> deleteTutorialById(){
         return tutorialService.deleteAll();
     }
+
+    @GetMapping("/published")
+    public Flux<Tutorial> findByPublished(@RequestParam Boolean published){
+        return tutorialService.findByPublished(published);
+    }
 }
